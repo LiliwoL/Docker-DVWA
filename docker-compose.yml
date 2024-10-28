@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+    dvwa:
+      image: vulnerables/web-dvwa
+      container_name: vulnerable-dvwa
+      ports:
+        - "80:80"
+      networks:
+        - dvwa_stack
+      restart: always
+      environment:
+          MYSQL_DATABASE: dvwa
+          MYSQL_USER: dvwa
+          MYSQL_PASSWORD: dvwa
+          MYSQL_ROOT_PASSWORD: dvwa
+    pma:
+      image: phpmyadmin/phpmyadmin
+      container_name: vulnerable-pma
+      ports:
+          - "8080:80"
+      environment:
+          PMA_HOST: dvwa
+          MYSQL_ROOT_PASSWORD: dvwa
+      networks:
+          - dvwa_stack
+networks:
+  dvwa_stack:
+    driver: bridge
