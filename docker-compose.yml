@@ -5,22 +5,31 @@ services:
       container_name: vulnerable-dvwa
       ports:
         - "80:80"
+      volumes:
+        - ./config/config.inc.php:/var/www/html/config/config.inc.php
       networks:
         - dvwa_stack
       restart: always
+
+    mariadb:
+      image: mariadb:10.7
+      container_name: vulnerable-dvwa-mariadb
       environment:
-          MYSQL_DATABASE: dvwa
-          MYSQL_USER: dvwa
-          MYSQL_PASSWORD: dvwa
-          MYSQL_ROOT_PASSWORD: dvwa
-    pma:
-      image: phpmyadmin/phpmyadmin
-      container_name: vulnerable-pma
+        - MYSQL_ROOT_PASSWORD=toor
+        - MYSQL_DATABASE=dvwa
+        - MYSQL_USER=dvwa
+        - MYSQL_PASSWORD=dvwa
       ports:
-          - "8080:80"
-      environment:
-          PMA_HOST: dvwa
-          MYSQL_ROOT_PASSWORD: dvwa
+        - "3306:3306"
+      networks:
+        - dvwa_stack
+      restart: always
+
+    adminer:
+      container_name: vulnerable-dvwa-adminer
+      image: adminer
+      ports:
+        - "8080:8080"
       networks:
           - dvwa_stack
 networks:
