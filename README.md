@@ -12,6 +12,8 @@ https://github.com/LiliwoL/Docker-DVWA
 DVWA:
 http://localhost:80
 
+admin:password
+
 Adminer:
 http://localhost:8080
 
